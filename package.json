@@ -1,0 +1,32 @@
+{
+  "name": "meadowlark-travel",
+  "version": "1.0.0",
+  "description": "Pet-project on express",
+  "main": "meadowlark.js",
+  "scripts": {
+    "dev": "./node_modules/nodemon/bin/nodemon.js medowlark.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoyMefisto/Meadowlark-Travel.git"
+  },
+  "keywords": [
+    "express",
+    "node",
+    "mongoDB"
+  ],
+  "author": "Artem Shanin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoyMefisto/Meadowlark-Travel/issues"
+  },
+  "homepage": "https://github.com/JoyMefisto/Meadowlark-Travel#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.13.3"
+  }
+}
