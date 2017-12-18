@@ -1,14 +1,7 @@
 const express = require('express');
 const server  = express();
 const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
-
-const fortunes = [
-    "Победи свои страхи или они победят тебя.",
-    "Рекам нужны истоки.",
-    "Не бойся неведомого.",
-    "Тебя ждёт приятный сюрприз.",
-    "Будь проще везде, где только можно.",
-]
+const fortune = require('./lib/fortune');
 
 // Установка механизма представления handlebars
 server.engine('handlebars', handlebars.engine);
@@ -26,8 +19,7 @@ server.get('/home', (req, res) => {
 });
 
 server.get('/about', (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', { fortune: randomFortune});
+    res.render('about', { fortune: fortune});
 });
 
 server.use((req, res, next) => {
