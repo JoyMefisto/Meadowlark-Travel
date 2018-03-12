@@ -1,7 +1,8 @@
 const express = require('express');
+const fortune = require('./lib/fortune');
+
 const server  = express();
 const handlebars = require('express-handlebars').create({ defaultLayout: 'main' });
-const fortune = require('./lib/fortune');
 
 // Установка механизма представления handlebars
 server.engine('handlebars', handlebars.engine);
@@ -9,9 +10,18 @@ server.set('view engine', 'handlebars');
 
 server.set('port', process.env.PORT || 3000);
 server.use(express.static(__dirname + '/public'));
+server.use(express.urlencoded({ extended: false }));
+server.use(express.json());
+
+// set 'showTests' context property if the querystring contains test=1
+server.use(function(req, res, next){
+    res.locals.showTests = server.get('env') !== 'production' &&
+        req.query.test === '1';
+    next();
+});
 
 server.get('/', (req, res) => {
-    res.render('home');
+    res.render('home', res.locals.showTests);
 });
 
 server.get('/home', (req, res) => {
@@ -19,7 +29,17 @@ server.get('/home', (req, res) => {
 });
 
 server.get('/about', (req, res) => {
-    res.render('about', { fortune: fortune});
+    res.render('about', {
+        fortune: fortune,
+        pageTestScript: '/qa/tests-about.js'
+    });
+});
+
+server.get('/tours/hood-river', (req, res, next) => {
+    res.render('tours/hood-river');
+});
+server.get('/tours/request-group-rate', (req, res, next) => {
+    res.render('tours/request-group-rate');
 });
 
 server.use((req, res, next) => {
